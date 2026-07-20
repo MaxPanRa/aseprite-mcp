@@ -1,0 +1,371 @@
+{
+  "type": "dual-grid",
+  "version": 7,
+  "purpose": "large G/V quadrant grid diagnostic",
+  "layoutPreset": "bitmask-diagnostic",
+  "tileSize": 64,
+  "columns": 4,
+  "rows": 4,
+  "spacing": 2,
+  "margin": 2,
+  "bitOrder": {
+    "nw": 1,
+    "ne": 2,
+    "se": 4,
+    "sw": 8
+  },
+  "tiles": [
+    {
+      "mask": 0,
+      "binary": "0000",
+      "pattern": [
+        "0000",
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "quadrants": {
+        "nw": "V",
+        "ne": "V",
+        "se": "V",
+        "sw": "V"
+      },
+      "sourceRect": {
+        "x": 2,
+        "y": 2,
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "mask": 1,
+      "binary": "0001",
+      "pattern": [
+        "1100",
+        "1100",
+        "0000",
+        "0000"
+      ],
+      "quadrants": {
+        "nw": "G",
+        "ne": "V",
+        "se": "V",
+        "sw": "V"
+      },
+      "sourceRect": {
+        "x": 68,
+        "y": 2,
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "mask": 2,
+      "binary": "0010",
+      "pattern": [
+        "0011",
+        "0011",
+        "0000",
+        "0000"
+      ],
+      "quadrants": {
+        "nw": "V",
+        "ne": "G",
+        "se": "V",
+        "sw": "V"
+      },
+      "sourceRect": {
+        "x": 134,
+        "y": 2,
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "mask": 3,
+      "binary": "0011",
+      "pattern": [
+        "1111",
+        "1111",
+        "0000",
+        "0000"
+      ],
+      "quadrants": {
+        "nw": "G",
+        "ne": "G",
+        "se": "V",
+        "sw": "V"
+      },
+      "sourceRect": {
+        "x": 200,
+        "y": 2,
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "mask": 4,
+      "binary": "0100",
+      "pattern": [
+        "0000",
+        "0000",
+        "0011",
+        "0011"
+      ],
+      "quadrants": {
+        "nw": "V",
+        "ne": "V",
+        "se": "G",
+        "sw": "V"
+      },
+      "sourceRect": {
+        "x": 2,
+        "y": 68,
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "mask": 5,
+      "binary": "0101",
+      "pattern": [
+        "1100",
+        "1100",
+        "0011",
+        "0011"
+      ],
+      "quadrants": {
+        "nw": "G",
+        "ne": "V",
+        "se": "G",
+        "sw": "V"
+      },
+      "sourceRect": {
+        "x": 68,
+        "y": 68,
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "mask": 6,
+      "binary": "0110",
+      "pattern": [
+        "0011",
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "quadrants": {
+        "nw": "V",
+        "ne": "G",
+        "se": "G",
+        "sw": "V"
+      },
+      "sourceRect": {
+        "x": 134,
+        "y": 68,
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "mask": 7,
+      "binary": "0111",
+      "pattern": [
+        "1111",
+        "1111",
+        "0011",
+        "0011"
+      ],
+      "quadrants": {
+        "nw": "G",
+        "ne": "G",
+        "se": "G",
+        "sw": "V"
+      },
+      "sourceRect": {
+        "x": 200,
+        "y": 68,
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "mask": 8,
+      "binary": "1000",
+      "pattern": [
+        "0000",
+        "0000",
+        "1100",
+        "1100"
+      ],
+      "quadrants": {
+        "nw": "V",
+        "ne": "V",
+        "se": "V",
+        "sw": "G"
+      },
+      "sourceRect": {
+        "x": 2,
+        "y": 134,
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "mask": 9,
+      "binary": "1001",
+      "pattern": [
+        "1100",
+        "1100",
+        "1100",
+        "1100"
+      ],
+      "quadrants": {
+        "nw": "G",
+        "ne": "V",
+        "se": "V",
+        "sw": "G"
+      },
+      "sourceRect": {
+        "x": 68,
+        "y": 134,
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "mask": 10,
+      "binary": "1010",
+      "pattern": [
+        "0011",
+        "0011",
+        "1100",
+        "1100"
+      ],
+      "quadrants": {
+        "nw": "V",
+        "ne": "G",
+        "se": "V",
+        "sw": "G"
+      },
+      "sourceRect": {
+        "x": 134,
+        "y": 134,
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "mask": 11,
+      "binary": "1011",
+      "pattern": [
+        "1111",
+        "1111",
+        "1100",
+        "1100"
+      ],
+      "quadrants": {
+        "nw": "G",
+        "ne": "G",
+        "se": "V",
+        "sw": "G"
+      },
+      "sourceRect": {
+        "x": 200,
+        "y": 134,
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "mask": 12,
+      "binary": "1100",
+      "pattern": [
+        "0000",
+        "0000",
+        "1111",
+        "1111"
+      ],
+      "quadrants": {
+        "nw": "V",
+        "ne": "V",
+        "se": "G",
+        "sw": "G"
+      },
+      "sourceRect": {
+        "x": 2,
+        "y": 200,
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "mask": 13,
+      "binary": "1101",
+      "pattern": [
+        "1100",
+        "1100",
+        "1111",
+        "1111"
+      ],
+      "quadrants": {
+        "nw": "G",
+        "ne": "V",
+        "se": "G",
+        "sw": "G"
+      },
+      "sourceRect": {
+        "x": 68,
+        "y": 200,
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "mask": 14,
+      "binary": "1110",
+      "pattern": [
+        "0011",
+        "0011",
+        "1111",
+        "1111"
+      ],
+      "quadrants": {
+        "nw": "V",
+        "ne": "G",
+        "se": "G",
+        "sw": "G"
+      },
+      "sourceRect": {
+        "x": 134,
+        "y": 200,
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "mask": 15,
+      "binary": "1111",
+      "pattern": [
+        "1111",
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "quadrants": {
+        "nw": "G",
+        "ne": "G",
+        "se": "G",
+        "sw": "G"
+      },
+      "sourceRect": {
+        "x": 200,
+        "y": 200,
+        "width": 64,
+        "height": 64
+      }
+    }
+  ]
+}

@@ -263,6 +263,23 @@ local function draw_dual_grid_digit(image, origin_x, origin_y, value, color)
   end
 end
 
+local function draw_dual_grid_glyph_scaled(image, origin_x, origin_y, value, color, scale)
+  local glyphs = {
+    ["G"]={"111","100","101","101","111"},
+    ["V"]={"101","101","101","101","010"}
+  }
+  local glyph = glyphs[value]
+  if glyph == nil then return end
+  for row=1,#glyph do
+    local line = glyph[row]
+    for column=1,#line do
+      if line:sub(column, column) == "1" then
+        draw_rect(image, origin_x + (column - 1) * scale, origin_y + (row - 1) * scale, scale, scale, color)
+      end
+    end
+  end
+end
+
 local function has_bit(value, bit)
   return math.floor(value / bit) % 2 == 1
 end
@@ -289,16 +306,21 @@ local function draw_dual_grid_quadrant_labels(image, tile_x, tile_y, tile_size, 
   local left_end = math.max(1, math.floor(pattern_width / 2))
   local right_start = math.min(pattern_width, left_end + 1)
   local quadrants = {
-    { bit=1, x=tile_x + math.floor(half / 2) - 1, y=tile_y + math.floor(half / 2) - 2, xs=1, xe=left_end, ys=1, ye=top_end },
-    { bit=2, x=tile_x + half + math.floor(half / 2) - 1, y=tile_y + math.floor(half / 2) - 2, xs=right_start, xe=pattern_width, ys=1, ye=top_end },
-    { bit=8, x=tile_x + math.floor(half / 2) - 1, y=tile_y + half + math.floor(half / 2) - 2, xs=1, xe=left_end, ys=bottom_start, ye=pattern_height },
-    { bit=4, x=tile_x + half + math.floor(half / 2) - 1, y=tile_y + half + math.floor(half / 2) - 2, xs=right_start, xe=pattern_width, ys=bottom_start, ye=pattern_height }
+    { bit=1, x=tile_x, y=tile_y, xs=1, xe=left_end, ys=1, ye=top_end },
+    { bit=2, x=tile_x + half, y=tile_y, xs=right_start, xe=pattern_width, ys=1, ye=top_end },
+    { bit=8, x=tile_x, y=tile_y + half, xs=1, xe=left_end, ys=bottom_start, ye=pattern_height },
+    { bit=4, x=tile_x + half, y=tile_y + half, xs=right_start, xe=pattern_width, ys=bottom_start, ye=pattern_height }
   }
+  local glyph_scale = math.max(1, math.floor(half / 8))
+  local glyph_width = 3 * glyph_scale
+  local glyph_height = 5 * glyph_scale
   for _, quadrant in ipairs(quadrants) do
     local ground = pattern ~= nil and pattern_has_ground(pattern, quadrant.xs, quadrant.xe, quadrant.ys, quadrant.ye) or has_bit(mask, quadrant.bit)
     local letter = ground and "G" or "V"
-    draw_dual_grid_digit(image, quadrant.x + 1, quadrant.y + 1, letter, colors.shadow)
-    draw_dual_grid_digit(image, quadrant.x, quadrant.y, letter, colors.highlight)
+    local label_x = quadrant.x + math.floor((half - glyph_width) / 2)
+    local label_y = quadrant.y + math.floor((half - glyph_height) / 2)
+    draw_dual_grid_glyph_scaled(image, label_x + glyph_scale, label_y + glyph_scale, letter, colors.shadow, glyph_scale)
+    draw_dual_grid_glyph_scaled(image, label_x, label_y, letter, colors.highlight, glyph_scale)
   end
 end
 
