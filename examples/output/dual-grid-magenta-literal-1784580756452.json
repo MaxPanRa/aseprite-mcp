@@ -1,38 +1,28 @@
 {
   "type": "dual-grid",
-  "layoutPreset": "template",
+  "layoutPreset": "template-literal-magenta",
   "referencePixelStencil": [
-    "0000110000111111",
-    "0000110000111111",
-    "0000000000000000",
-    "0000000000000000",
-    "0000110000111111",
-    "0000110000111111",
-    "0011001100000011",
-    "0011001100000011",
-    "0000110000111111",
-    "0000110000111111",
-    "1100110011001100",
-    "1100110011001100",
-    "0000110000111111",
-    "0000110000111111",
-    "1111111100111111",
-    "1111111100111111"
+    "00011000",
+    "10011111",
+    "10011111",
+    "01111110",
+    "01111110",
+    "00000110",
+    "00000110",
+    "00110000"
   ],
   "tiles": [
     {
       "mask": 0,
-      "name": "dual-grid-0000",
+      "name": "template-tile-00",
       "pattern": [
-        "0000",
-        "0000",
-        "0000",
-        "0000"
+        "00",
+        "10"
       ],
       "quadrantLabels": {
         "nw": "V",
         "ne": "V",
-        "sw": "V",
+        "sw": "G",
         "se": "V"
       },
       "sourceRect": {
@@ -44,18 +34,16 @@
     },
     {
       "mask": 1,
-      "name": "dual-grid-0001",
+      "name": "template-tile-01",
       "pattern": [
-        "1100",
-        "1100",
-        "0000",
-        "0000"
+        "01",
+        "01"
       ],
       "quadrantLabels": {
-        "nw": "G",
-        "ne": "V",
+        "nw": "V",
+        "ne": "G",
         "sw": "V",
-        "se": "V"
+        "se": "G"
       },
       "sourceRect": {
         "x": 36,
@@ -66,18 +54,16 @@
     },
     {
       "mask": 2,
-      "name": "dual-grid-0010",
+      "name": "template-tile-02",
       "pattern": [
-        "0011",
-        "0011",
-        "0000",
-        "0000"
+        "10",
+        "11"
       ],
       "quadrantLabels": {
-        "nw": "V",
-        "ne": "G",
-        "sw": "V",
-        "se": "V"
+        "nw": "G",
+        "ne": "V",
+        "sw": "G",
+        "se": "G"
       },
       "sourceRect": {
         "x": 70,
@@ -88,18 +74,16 @@
     },
     {
       "mask": 3,
-      "name": "dual-grid-0011",
+      "name": "template-tile-03",
       "pattern": [
-        "1111",
-        "1111",
-        "0000",
-        "0000"
+        "00",
+        "11"
       ],
       "quadrantLabels": {
-        "nw": "G",
-        "ne": "G",
-        "sw": "V",
-        "se": "V"
+        "nw": "V",
+        "ne": "V",
+        "sw": "G",
+        "se": "G"
       },
       "sourceRect": {
         "x": 104,
@@ -110,15 +94,13 @@
     },
     {
       "mask": 4,
-      "name": "dual-grid-0100",
+      "name": "template-tile-04",
       "pattern": [
-        "0000",
-        "0000",
-        "0011",
-        "0011"
+        "10",
+        "01"
       ],
       "quadrantLabels": {
-        "nw": "V",
+        "nw": "G",
         "ne": "V",
         "sw": "V",
         "se": "G"
@@ -132,17 +114,15 @@
     },
     {
       "mask": 5,
-      "name": "dual-grid-0101",
+      "name": "template-tile-05",
       "pattern": [
-        "1100",
-        "1100",
-        "0011",
-        "0011"
+        "01",
+        "11"
       ],
       "quadrantLabels": {
-        "nw": "G",
-        "ne": "V",
-        "sw": "V",
+        "nw": "V",
+        "ne": "G",
+        "sw": "G",
         "se": "G"
       },
       "sourceRect": {
@@ -154,18 +134,16 @@
     },
     {
       "mask": 6,
-      "name": "dual-grid-0110",
+      "name": "template-tile-06",
       "pattern": [
-        "0011",
-        "0011",
-        "0000",
-        "0000"
+        "11",
+        "11"
       ],
       "quadrantLabels": {
-        "nw": "V",
+        "nw": "G",
         "ne": "G",
-        "sw": "V",
-        "se": "V"
+        "sw": "G",
+        "se": "G"
       },
       "sourceRect": {
         "x": 70,
@@ -176,18 +154,16 @@
     },
     {
       "mask": 7,
-      "name": "dual-grid-0111",
+      "name": "template-tile-07",
       "pattern": [
-        "1111",
-        "1111",
-        "0011",
-        "0011"
+        "11",
+        "10"
       ],
       "quadrantLabels": {
         "nw": "G",
         "ne": "G",
-        "sw": "V",
-        "se": "G"
+        "sw": "G",
+        "se": "V"
       },
       "sourceRect": {
         "x": 104,
@@ -198,17 +174,15 @@
     },
     {
       "mask": 8,
-      "name": "dual-grid-1000",
+      "name": "template-tile-08",
       "pattern": [
-        "0000",
-        "0000",
-        "1100",
-        "1100"
+        "01",
+        "00"
       ],
       "quadrantLabels": {
         "nw": "V",
-        "ne": "V",
-        "sw": "G",
+        "ne": "G",
+        "sw": "V",
         "se": "V"
       },
       "sourceRect": {
@@ -220,17 +194,15 @@
     },
     {
       "mask": 9,
-      "name": "dual-grid-1001",
+      "name": "template-tile-09",
       "pattern": [
-        "1100",
-        "1100",
-        "1100",
-        "1100"
+        "11",
+        "00"
       ],
       "quadrantLabels": {
         "nw": "G",
-        "ne": "V",
-        "sw": "G",
+        "ne": "G",
+        "sw": "V",
         "se": "V"
       },
       "sourceRect": {
@@ -242,18 +214,16 @@
     },
     {
       "mask": 10,
-      "name": "dual-grid-1010",
+      "name": "template-tile-10",
       "pattern": [
-        "0011",
-        "0011",
-        "1100",
-        "1100"
+        "11",
+        "01"
       ],
       "quadrantLabels": {
-        "nw": "V",
+        "nw": "G",
         "ne": "G",
-        "sw": "G",
-        "se": "V"
+        "sw": "V",
+        "se": "G"
       },
       "sourceRect": {
         "x": 70,
@@ -264,16 +234,14 @@
     },
     {
       "mask": 11,
-      "name": "dual-grid-1011",
+      "name": "template-tile-11",
       "pattern": [
-        "1111",
-        "1111",
-        "1100",
-        "1100"
+        "10",
+        "10"
       ],
       "quadrantLabels": {
         "nw": "G",
-        "ne": "G",
+        "ne": "V",
         "sw": "G",
         "se": "V"
       },
@@ -286,18 +254,16 @@
     },
     {
       "mask": 12,
-      "name": "dual-grid-1100",
+      "name": "template-tile-12",
       "pattern": [
-        "0000",
-        "0000",
-        "1111",
-        "1111"
+        "00",
+        "00"
       ],
       "quadrantLabels": {
         "nw": "V",
         "ne": "V",
-        "sw": "G",
-        "se": "G"
+        "sw": "V",
+        "se": "V"
       },
       "sourceRect": {
         "x": 2,
@@ -308,15 +274,13 @@
     },
     {
       "mask": 13,
-      "name": "dual-grid-1101",
+      "name": "template-tile-13",
       "pattern": [
-        "1100",
-        "1100",
-        "1111",
-        "1111"
+        "00",
+        "11"
       ],
       "quadrantLabels": {
-        "nw": "G",
+        "nw": "V",
         "ne": "V",
         "sw": "G",
         "se": "G"
@@ -330,18 +294,16 @@
     },
     {
       "mask": 14,
-      "name": "dual-grid-1110",
+      "name": "template-tile-14",
       "pattern": [
-        "0011",
-        "0011",
-        "0011",
-        "0011"
+        "01",
+        "00"
       ],
       "quadrantLabels": {
         "nw": "V",
         "ne": "G",
         "sw": "V",
-        "se": "G"
+        "se": "V"
       },
       "sourceRect": {
         "x": 70,
@@ -352,18 +314,16 @@
     },
     {
       "mask": 15,
-      "name": "dual-grid-1111",
+      "name": "template-tile-15",
       "pattern": [
-        "1111",
-        "1111",
-        "1111",
-        "1111"
+        "10",
+        "00"
       ],
       "quadrantLabels": {
         "nw": "G",
-        "ne": "G",
-        "sw": "G",
-        "se": "G"
+        "ne": "V",
+        "sw": "V",
+        "se": "V"
       },
       "sourceRect": {
         "x": 104,

@@ -38,14 +38,14 @@ function quadrantLabelsFromStencil(referenceStencil: readonly string[], columns:
 describe("dual-grid template stencil", () => {
   it("matches the magenta template quadrant order with G for ground and V for void", () => {
     expect(quadrantLabelsFromStencil(REFERENCE_DUAL_GRID_PIXEL_STENCIL, 4, 4)).toEqual([
-      "VVGVVGGG",
-      "VVVVVVVV",
-      "VVGVVGGG",
-      "VGVGVVVG",
-      "VVGVVGGG",
-      "GVGVGVGV",
-      "VVGVVGGG",
-      "GGGGVGGG",
+      "VVVGGVVV",
+      "GVVGGGGG",
+      "GVVGGGGG",
+      "VGGGGGGV",
+      "VGGGGGGV",
+      "VVVVVGGV",
+      "VVVVVGGV",
+      "VVGGVVVV",
     ]);
   });
 });
