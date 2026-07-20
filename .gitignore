@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+aseprite-mcp.config.json
+coverage/
+tmp/
+examples/output/
+*.tsbuildinfo

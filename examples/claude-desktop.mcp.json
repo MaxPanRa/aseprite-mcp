@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "aseprite": {
+      "command": "node",
+      "args": ["C:/absolute/path/to/aseprite-mcp/dist/index.js"],
+      "env": {
+        "ASEPRITE_PATH": "C:/Program Files/Aseprite/Aseprite.exe"
+      }
+    }
+  }
+}

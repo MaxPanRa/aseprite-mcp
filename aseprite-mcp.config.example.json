@@ -1,0 +1,11 @@
+{
+  "asepritePath": null,
+  "allowedDirectories": ["."],
+  "tempDirectory": ".aseprite-mcp-temp",
+  "maxWidth": 4096,
+  "maxHeight": 4096,
+  "maxFrames": 512,
+  "processTimeoutMs": 30000,
+  "allowOverwrite": false,
+  "logLevel": "info"
+}

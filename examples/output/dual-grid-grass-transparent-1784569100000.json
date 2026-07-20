@@ -1,0 +1,257 @@
+{
+  "type": "dual-grid",
+  "version": 1,
+  "tileSize": 32,
+  "columns": 4,
+  "rows": 4,
+  "bitOrder": {
+    "nw": 1,
+    "ne": 2,
+    "se": 4,
+    "sw": 8
+  },
+  "material": "grass",
+  "empty": "transparent",
+  "tiles": [
+    {
+      "mask": 0,
+      "bits": {
+        "nw": false,
+        "ne": false,
+        "se": false,
+        "sw": false
+      },
+      "sourceRect": {
+        "x": 0,
+        "y": 0,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 1,
+      "bits": {
+        "nw": true,
+        "ne": false,
+        "se": false,
+        "sw": false
+      },
+      "sourceRect": {
+        "x": 32,
+        "y": 0,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 2,
+      "bits": {
+        "nw": false,
+        "ne": true,
+        "se": false,
+        "sw": false
+      },
+      "sourceRect": {
+        "x": 64,
+        "y": 0,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 3,
+      "bits": {
+        "nw": true,
+        "ne": true,
+        "se": false,
+        "sw": false
+      },
+      "sourceRect": {
+        "x": 96,
+        "y": 0,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 4,
+      "bits": {
+        "nw": false,
+        "ne": false,
+        "se": true,
+        "sw": false
+      },
+      "sourceRect": {
+        "x": 0,
+        "y": 32,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 5,
+      "bits": {
+        "nw": true,
+        "ne": false,
+        "se": true,
+        "sw": false
+      },
+      "sourceRect": {
+        "x": 32,
+        "y": 32,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 6,
+      "bits": {
+        "nw": false,
+        "ne": true,
+        "se": true,
+        "sw": false
+      },
+      "sourceRect": {
+        "x": 64,
+        "y": 32,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 7,
+      "bits": {
+        "nw": true,
+        "ne": true,
+        "se": true,
+        "sw": false
+      },
+      "sourceRect": {
+        "x": 96,
+        "y": 32,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 8,
+      "bits": {
+        "nw": false,
+        "ne": false,
+        "se": false,
+        "sw": true
+      },
+      "sourceRect": {
+        "x": 0,
+        "y": 64,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 9,
+      "bits": {
+        "nw": true,
+        "ne": false,
+        "se": false,
+        "sw": true
+      },
+      "sourceRect": {
+        "x": 32,
+        "y": 64,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 10,
+      "bits": {
+        "nw": false,
+        "ne": true,
+        "se": false,
+        "sw": true
+      },
+      "sourceRect": {
+        "x": 64,
+        "y": 64,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 11,
+      "bits": {
+        "nw": true,
+        "ne": true,
+        "se": false,
+        "sw": true
+      },
+      "sourceRect": {
+        "x": 96,
+        "y": 64,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 12,
+      "bits": {
+        "nw": false,
+        "ne": false,
+        "se": true,
+        "sw": true
+      },
+      "sourceRect": {
+        "x": 0,
+        "y": 96,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 13,
+      "bits": {
+        "nw": true,
+        "ne": false,
+        "se": true,
+        "sw": true
+      },
+      "sourceRect": {
+        "x": 32,
+        "y": 96,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 14,
+      "bits": {
+        "nw": false,
+        "ne": true,
+        "se": true,
+        "sw": true
+      },
+      "sourceRect": {
+        "x": 64,
+        "y": 96,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 15,
+      "bits": {
+        "nw": true,
+        "ne": true,
+        "se": true,
+        "sw": true
+      },
+      "sourceRect": {
+        "x": 96,
+        "y": 96,
+        "width": 32,
+        "height": 32
+      }
+    }
+  ]
+}

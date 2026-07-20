@@ -1,0 +1,48 @@
+{
+  "steps": [
+    {
+      "tool": "aseprite_create_sprite",
+      "arguments": {
+        "width": 32,
+        "height": 32,
+        "frameCount": 4,
+        "frameDurationMs": 120,
+        "outputPath": "examples/output/player.aseprite",
+        "overwrite": true
+      }
+    },
+    {
+      "tool": "aseprite_set_pixels",
+      "arguments": {
+        "filePath": "examples/output/player.aseprite",
+        "pixels": [
+          { "x": 15, "y": 10, "color": "#334155FF" },
+          { "x": 16, "y": 10, "color": "#334155FF" },
+          { "x": 15, "y": 11, "color": "#F8FAFCFF" },
+          { "x": 16, "y": 11, "color": "#F8FAFCFF" }
+        ],
+        "createBackup": true
+      }
+    },
+    {
+      "tool": "aseprite_create_tag",
+      "arguments": {
+        "filePath": "examples/output/player.aseprite",
+        "name": "idle",
+        "fromFrame": 1,
+        "toFrame": 4,
+        "direction": "ping-pong"
+      }
+    },
+    {
+      "tool": "aseprite_export_spritesheet",
+      "arguments": {
+        "filePath": "examples/output/player.aseprite",
+        "sheetPath": "examples/output/player.png",
+        "dataPath": "examples/output/player.json",
+        "sheetType": "horizontal",
+        "overwrite": true
+      }
+    }
+  ]
+}
