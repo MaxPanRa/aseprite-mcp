@@ -245,9 +245,12 @@ local function draw_dual_grid_digit(image, origin_x, origin_y, value, color)
     ["C"]={"111","100","100","100","111"},
     ["D"]={"110","101","101","101","110"},
     ["E"]={"111","100","110","100","111"},
-    ["F"]={"111","100","110","100","100"}
+    ["F"]={"111","100","110","100","100"},
+    ["G"]={"111","100","101","101","111"},
+    ["V"]={"101","101","101","101","010"}
   }
-  local text = string.format("%X", value)
+  local text = value
+  if type(value) ~= "string" then text = string.format("%X", value) end
   local glyph = glyphs[text]
   if glyph == nil then return end
   for row=1,#glyph do
@@ -262,6 +265,41 @@ end
 
 local function has_bit(value, bit)
   return math.floor(value / bit) % 2 == 1
+end
+
+local function pattern_has_ground(pattern, x_start, x_end, y_start, y_end)
+  if pattern == nil then return false end
+  for y=y_start,y_end do
+    local row = pattern[y]
+    if row ~= nil then
+      for x=x_start,x_end do
+        if row:sub(x, x) == "1" then return true end
+      end
+    end
+  end
+  return false
+end
+
+local function draw_dual_grid_quadrant_labels(image, tile_x, tile_y, tile_size, mask, pattern, colors)
+  local half = math.floor(tile_size / 2)
+  local pattern_height = pattern and #pattern or 2
+  local pattern_width = pattern and string.len(pattern[1] or "") or 2
+  local top_end = math.max(1, math.floor(pattern_height / 2))
+  local bottom_start = math.min(pattern_height, top_end + 1)
+  local left_end = math.max(1, math.floor(pattern_width / 2))
+  local right_start = math.min(pattern_width, left_end + 1)
+  local quadrants = {
+    { bit=1, x=tile_x + math.floor(half / 2) - 1, y=tile_y + math.floor(half / 2) - 2, xs=1, xe=left_end, ys=1, ye=top_end },
+    { bit=2, x=tile_x + half + math.floor(half / 2) - 1, y=tile_y + math.floor(half / 2) - 2, xs=right_start, xe=pattern_width, ys=1, ye=top_end },
+    { bit=8, x=tile_x + math.floor(half / 2) - 1, y=tile_y + half + math.floor(half / 2) - 2, xs=1, xe=left_end, ys=bottom_start, ye=pattern_height },
+    { bit=4, x=tile_x + half + math.floor(half / 2) - 1, y=tile_y + half + math.floor(half / 2) - 2, xs=right_start, xe=pattern_width, ys=bottom_start, ye=pattern_height }
+  }
+  for _, quadrant in ipairs(quadrants) do
+    local ground = pattern ~= nil and pattern_has_ground(pattern, quadrant.xs, quadrant.xe, quadrant.ys, quadrant.ye) or has_bit(mask, quadrant.bit)
+    local letter = ground and "G" or "V"
+    draw_dual_grid_digit(image, quadrant.x + 1, quadrant.y + 1, letter, colors.shadow)
+    draw_dual_grid_digit(image, quadrant.x, quadrant.y, letter, colors.highlight)
+  end
 end
 
 local function draw_pattern_tile(image, tile_x, tile_y, tile_size, pattern, color)
@@ -323,6 +361,8 @@ local function draw_dual_grid_tile(image, tile_x, tile_y, tile_size, mask, patte
   if label_mode == "mask" then
     draw_dual_grid_digit(image, tile_x + 2, tile_y + 2, mask, colors.shadow)
     draw_dual_grid_digit(image, tile_x + 1, tile_y + 1, mask, colors.highlight)
+  elseif label_mode == "quadrants" then
+    draw_dual_grid_quadrant_labels(image, tile_x, tile_y, tile_size, mask, pattern, colors)
   end
 end
 

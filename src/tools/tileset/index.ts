@@ -23,29 +23,31 @@ const DualGridTilesetSchema = {
   shadowColor: ColorSchema.default("#1F3F1FFF"),
   gridColor: ColorSchema.default("#FF55D6FF"),
   guideMode: z.enum(["none", "tile", "quadrant"]).default("none"),
-  labelMode: z.enum(["none", "mask"]).default("none"),
+  labelMode: z.enum(["none", "mask", "quadrants"]).default("none"),
+  requireUniqueTiles: z.boolean().default(true),
   overwrite: z.boolean().optional(),
   dryRun: z.boolean().default(false),
 };
 
-const REFERENCE_DUAL_GRID_PIXEL_STENCIL = [
-  "0000001111000000",
-  "0000001111000000",
-  "1100001111111111",
-  "1100001111111111",
-  "1100001111111111",
-  "1100001111111111",
-  "0011111111111100",
-  "0011111111111100",
-  "0011111111111100",
-  "0011111111111100",
-  "0000000000111100",
-  "0000000000111100",
-  "0000000000111100",
-  "0000000000111100",
-  "0000111100000000",
-  "0000111100000000",
-] as const;
+function buildUniqueDualGridStencil(columns = 4, rows = 4, quadrantCells = 2): string[] {
+  return Array.from({ length: rows * quadrantCells * 2 }, (_, y) => {
+    const tileRow = Math.floor(y / (quadrantCells * 2));
+    const localY = y % (quadrantCells * 2);
+    const south = localY >= quadrantCells;
+    let line = "";
+    for (let tileColumn = 0; tileColumn < columns; tileColumn += 1) {
+      const mask = tileRow * columns + tileColumn;
+      for (let localX = 0; localX < quadrantCells * 2; localX += 1) {
+        const east = localX >= quadrantCells;
+        const bit = !south && !east ? 1 : !south && east ? 2 : south && east ? 4 : 8;
+        line += mask & bit ? "1" : "0";
+      }
+    }
+    return line;
+  });
+}
+
+const REFERENCE_DUAL_GRID_PIXEL_STENCIL = buildUniqueDualGridStencil();
 
 function tilePatternFromTemplate(mask: number, columns: number, rows: number, referenceStencil: readonly string[]): string[] {
   const column = mask % columns;
@@ -141,6 +143,21 @@ function validateReferenceStencil(referenceStencil: string[], columns: number, r
   return undefined;
 }
 
+function duplicatePatterns(tiles: ReturnType<typeof dualGridTiles>) {
+  const seen = new Map<string, number>();
+  const duplicates: Array<{ firstMask: number; duplicateMask: number; pattern: string[] }> = [];
+  for (const tile of tiles) {
+    const key = tile.pattern.join("\n");
+    const firstMask = seen.get(key);
+    if (firstMask === undefined) {
+      seen.set(key, tile.mask);
+    } else {
+      duplicates.push({ firstMask, duplicateMask: tile.mask, pattern: tile.pattern });
+    }
+  }
+  return duplicates;
+}
+
 export function registerTilesetTools(server: McpServer, context: AppContext): void {
   server.registerTool(
     "aseprite_create_dual_grid_tileset",
@@ -189,6 +206,17 @@ export function registerTilesetTools(server: McpServer, context: AppContext): vo
           args.layoutPreset,
           referenceStencil,
         );
+        const duplicates = duplicatePatterns(tiles);
+        if (args.requireUniqueTiles && duplicates.length > 0) {
+          return {
+            success: false,
+            error: {
+              code: "DUPLICATE_TILE_PATTERNS",
+              message: "Dual-grid tileset contains repeated tile patterns.",
+              details: { duplicates },
+            },
+          };
+        }
         const metadata = {
           type: "dual-grid",
           version: 1,
@@ -206,6 +234,7 @@ export function registerTilesetTools(server: McpServer, context: AppContext): vo
             args.layoutPreset === "bitmask"
               ? "mask = (nw ? 1 : 0) | (ne ? 2 : 0) | (se ? 4 : 0) | (sw ? 8 : 0)"
               : "pattern is copied from the reference dual-grid template stencil",
+          duplicatePatterns: duplicates,
           tiles,
         };
 
