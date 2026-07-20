@@ -324,7 +324,14 @@ local function draw_dual_grid_quadrant_labels(image, tile_x, tile_y, tile_size, 
   end
 end
 
-local function draw_pattern_tile(image, tile_x, tile_y, tile_size, pattern, color)
+local function pattern_cell_is_ground(pattern, x, y)
+  if y < 1 or y > #pattern then return false end
+  local row = pattern[y]
+  if row == nil or x < 1 or x > string.len(row) then return false end
+  return row:sub(x, x) == "1"
+end
+
+local function draw_pattern_tile(image, tile_x, tile_y, tile_size, pattern, colors)
   local pattern_height = #pattern
   if pattern_height == 0 then return end
   local pattern_width = string.len(pattern[1] or "")
@@ -338,7 +345,25 @@ local function draw_pattern_tile(image, tile_x, tile_y, tile_size, pattern, colo
         local y1 = tile_y + math.floor((pattern_y - 1) * tile_size / pattern_height)
         local x2 = tile_x + math.floor(pattern_x * tile_size / pattern_width)
         local y2 = tile_y + math.floor(pattern_y * tile_size / pattern_height)
-        draw_rect(image, x1, y1, x2 - x1, y2 - y1, color)
+        local width = x2 - x1
+        local height = y2 - y1
+        draw_rect(image, x1, y1, width, height, colors.terrain)
+        if not pattern_cell_is_ground(pattern, pattern_x, pattern_y - 1) then
+          draw_rect(image, x1, y1, width, 2, colors.highlight)
+        end
+        if not pattern_cell_is_ground(pattern, pattern_x - 1, pattern_y) then
+          draw_rect(image, x1, y1, 2, height, colors.highlight)
+        end
+        if not pattern_cell_is_ground(pattern, pattern_x + 1, pattern_y) then
+          draw_rect(image, x2 - 2, y1, 2, height, colors.edge)
+        end
+        if not pattern_cell_is_ground(pattern, pattern_x, pattern_y + 1) then
+          draw_rect(image, x1, y2 - 2, width, 2, colors.shadow)
+        end
+        if width >= 12 and height >= 12 then
+          draw_rect(image, x1 + math.floor(width * 0.35), y1 + math.floor(height * 0.35), 1, 1, colors.highlight)
+          draw_rect(image, x1 + math.floor(width * 0.65), y1 + math.floor(height * 0.65), 1, 1, colors.shadow)
+        end
       end
     end
   end
@@ -349,7 +374,7 @@ local function draw_dual_grid_tile(image, tile_x, tile_y, tile_size, mask, patte
   draw_rect(image, tile_x, tile_y, tile_size, tile_size, colors.background)
 
   if pattern ~= nil then
-    draw_pattern_tile(image, tile_x, tile_y, tile_size, pattern, colors.terrain)
+    draw_pattern_tile(image, tile_x, tile_y, tile_size, pattern, colors)
   else
     local right = tile_size - half
     local bottom = tile_size - half
