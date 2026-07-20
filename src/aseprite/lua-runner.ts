@@ -331,7 +331,32 @@ local function pattern_cell_is_ground(pattern, x, y)
   return row:sub(x, x) == "1"
 end
 
-local function draw_pattern_tile(image, tile_x, tile_y, tile_size, pattern, colors)
+local function draw_grass_details(image, x1, y1, width, height, colors, seed)
+  if width < 8 or height < 8 then return end
+  local flower = app.pixelColor.rgba(240, 218, 105, 255)
+  local soft = app.pixelColor.rgba(126, 202, 102, 255)
+  local glow = app.pixelColor.rgba(188, 226, 116, 255)
+  local mid_x = x1 + math.floor(width / 2)
+  local mid_y = y1 + math.floor(height / 2)
+  local left_blade = x1 + 3 + (seed % 4)
+  local center_blade = mid_x + ((seed % 3) - 1)
+  local right_blade = x1 + width - 4 - (seed % 5)
+  draw_rect(image, left_blade, y1 + height - 7, 1, 5, colors.highlight)
+  draw_rect(image, left_blade + 1, y1 + height - 8, 1, 3, glow)
+  draw_rect(image, center_blade, y1 + height - 9, 1, 6, colors.edge)
+  draw_rect(image, center_blade + 1, y1 + height - 10, 1, 3, colors.highlight)
+  draw_rect(image, right_blade, y1 + height - 7, 1, 5, colors.shadow)
+  draw_rect(image, right_blade - 1, y1 + height - 9, 1, 4, colors.edge)
+  draw_rect(image, x1 + 4 + (seed % 5), mid_y - 1, 2, 1, soft)
+  draw_rect(image, x1 + width - 8, mid_y + (seed % 3), 2, 1, colors.shadow)
+  if seed % 4 == 0 then
+    draw_rect(image, x1 + math.floor(width * 0.65), y1 + math.floor(height * 0.35), 1, 1, flower)
+  elseif seed % 5 == 0 then
+    draw_rect(image, x1 + math.floor(width * 0.3), y1 + math.floor(height * 0.45), 1, 1, glow)
+  end
+end
+
+local function draw_pattern_tile(image, tile_x, tile_y, tile_size, mask, pattern, colors, style_mode)
   local pattern_height = #pattern
   if pattern_height == 0 then return end
   local pattern_width = string.len(pattern[1] or "")
@@ -364,17 +389,20 @@ local function draw_pattern_tile(image, tile_x, tile_y, tile_size, pattern, colo
           draw_rect(image, x1 + math.floor(width * 0.35), y1 + math.floor(height * 0.35), 1, 1, colors.highlight)
           draw_rect(image, x1 + math.floor(width * 0.65), y1 + math.floor(height * 0.65), 1, 1, colors.shadow)
         end
+        if style_mode == "grass" then
+          draw_grass_details(image, x1, y1, width, height, colors, mask * 13 + pattern_x * 5 + pattern_y * 7)
+        end
       end
     end
   end
 end
 
-local function draw_dual_grid_tile(image, tile_x, tile_y, tile_size, mask, pattern, colors, guide_mode, label_mode)
+local function draw_dual_grid_tile(image, tile_x, tile_y, tile_size, mask, pattern, colors, guide_mode, label_mode, style_mode)
   local half = math.floor(tile_size / 2)
   draw_rect(image, tile_x, tile_y, tile_size, tile_size, colors.background)
 
   if pattern ~= nil then
-    draw_pattern_tile(image, tile_x, tile_y, tile_size, pattern, colors)
+    draw_pattern_tile(image, tile_x, tile_y, tile_size, mask, pattern, colors, style_mode)
   else
     local right = tile_size - half
     local bottom = tile_size - half
@@ -605,7 +633,7 @@ local status, err = pcall(function()
       local tile_x = margin + column * (tile_size + spacing)
       local tile_y = margin + row * (tile_size + spacing)
       local pattern = payload.tilePatterns and payload.tilePatterns[mask + 1] or nil
-      draw_dual_grid_tile(image, tile_x, tile_y, tile_size, mask, pattern, colors, payload.guideMode or "none", payload.labelMode or "none")
+      draw_dual_grid_tile(image, tile_x, tile_y, tile_size, mask, pattern, colors, payload.guideMode or "none", payload.labelMode or "none", payload.styleMode or "basic")
     end
     sprite:saveAs(payload.outputPath)
     ok({ filePath=payload.outputPath, tileSystem="dual-grid", tileCount=16, tileSize=tile_size, columns=columns, rows=rows, document=sprite_info(sprite), warnings={} })

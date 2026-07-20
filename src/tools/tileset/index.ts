@@ -24,6 +24,7 @@ const DualGridTilesetSchema = {
   gridColor: ColorSchema.default("#FF55D6FF"),
   guideMode: z.enum(["none", "tile", "quadrant"]).default("none"),
   labelMode: z.enum(["none", "mask", "quadrants"]).default("none"),
+  styleMode: z.enum(["basic", "grass"]).default("basic"),
   requireUniqueTiles: z.boolean().default(true),
   overwrite: z.boolean().optional(),
   dryRun: z.boolean().default(false),
@@ -250,6 +251,7 @@ export function registerTilesetTools(server: McpServer, context: AppContext): vo
           gridColor: normalizeColor(args.gridColor),
           guideMode: args.guideMode,
           labelMode: args.labelMode,
+          styleMode: args.styleMode,
         })) as Record<string, unknown>;
 
         if (metadataPath) {

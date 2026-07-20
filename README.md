@@ -212,12 +212,13 @@ Create a dual-grid tileset:
   "gridColor": "#FF55D6FF",
   "guideMode": "none",
   "labelMode": "quadrants",
+  "styleMode": "basic",
   "requireUniqueTiles": true,
   "overwrite": true
 }
 ```
 
-The default `template` layout follows a dual-grid stencil with 16 unique tile patterns. Material pixels are placed according to a pixel-level template grid, not by row-major binary mask order. `referenceStencil` is optional; when provided, it must be a rectangular `0`/`1` matrix whose width is divisible by `columns` and whose height is divisible by the tileset rows. `requireUniqueTiles` rejects repeated patterns. `labelMode: "quadrants"` overlays `G` for ground and `V` for void in each tile quadrant, useful for debugging the template before art styling. Use `layoutPreset: "bitmask"` only when you need the direct `NW=1`, `NE=2`, `SE=4`, `SW=8` quadrant map. The metadata file includes tile rectangles, per-tile stencil patterns, pattern resolution, and quadrant summaries for engine-side lookup.
+The default `template` layout follows a dual-grid stencil with 16 unique tile patterns. Material pixels are placed according to a pixel-level template grid, not by row-major binary mask order. `referenceStencil` is optional; when provided, it must be a rectangular `0`/`1` matrix whose width is divisible by `columns` and whose height is divisible by the tileset rows. `requireUniqueTiles` rejects repeated patterns. `labelMode: "quadrants"` overlays `G` for ground and `V` for void in each tile quadrant, useful for debugging the template before art styling. Use `styleMode: "grass"` to render styled grass details instead of plain terrain fills. Use `layoutPreset: "bitmask"` only when you need the direct `NW=1`, `NE=2`, `SE=4`, `SW=8` quadrant map. The metadata file includes tile rectangles, per-tile stencil patterns, pattern resolution, and quadrant summaries for engine-side lookup.
 
 Query the palette:
 

@@ -1,0 +1,342 @@
+{
+  "type": "dual-grid",
+  "layoutPreset": "template-literal-magenta",
+  "styleMode": "storybook-grass",
+  "tileSize": 32,
+  "columns": 4,
+  "rows": 4,
+  "spacing": 0,
+  "margin": 0,
+  "referencePixelStencil": [
+    "00011000",
+    "10011111",
+    "10011111",
+    "01111110",
+    "01111110",
+    "00000110",
+    "00000110",
+    "00110000"
+  ],
+  "tiles": [
+    {
+      "index": 0,
+      "name": "template-tile-00",
+      "pattern": [
+        "00",
+        "10"
+      ],
+      "cells": {
+        "topLeft": "V",
+        "topRight": "V",
+        "bottomLeft": "G",
+        "bottomRight": "V"
+      },
+      "sourceRect": {
+        "x": 0,
+        "y": 0,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "index": 1,
+      "name": "template-tile-01",
+      "pattern": [
+        "01",
+        "01"
+      ],
+      "cells": {
+        "topLeft": "V",
+        "topRight": "G",
+        "bottomLeft": "V",
+        "bottomRight": "G"
+      },
+      "sourceRect": {
+        "x": 32,
+        "y": 0,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "index": 2,
+      "name": "template-tile-02",
+      "pattern": [
+        "10",
+        "11"
+      ],
+      "cells": {
+        "topLeft": "G",
+        "topRight": "V",
+        "bottomLeft": "G",
+        "bottomRight": "G"
+      },
+      "sourceRect": {
+        "x": 64,
+        "y": 0,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "index": 3,
+      "name": "template-tile-03",
+      "pattern": [
+        "00",
+        "11"
+      ],
+      "cells": {
+        "topLeft": "V",
+        "topRight": "V",
+        "bottomLeft": "G",
+        "bottomRight": "G"
+      },
+      "sourceRect": {
+        "x": 96,
+        "y": 0,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "index": 4,
+      "name": "template-tile-04",
+      "pattern": [
+        "10",
+        "01"
+      ],
+      "cells": {
+        "topLeft": "G",
+        "topRight": "V",
+        "bottomLeft": "V",
+        "bottomRight": "G"
+      },
+      "sourceRect": {
+        "x": 0,
+        "y": 32,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "index": 5,
+      "name": "template-tile-05",
+      "pattern": [
+        "01",
+        "11"
+      ],
+      "cells": {
+        "topLeft": "V",
+        "topRight": "G",
+        "bottomLeft": "G",
+        "bottomRight": "G"
+      },
+      "sourceRect": {
+        "x": 32,
+        "y": 32,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "index": 6,
+      "name": "template-tile-06",
+      "pattern": [
+        "11",
+        "11"
+      ],
+      "cells": {
+        "topLeft": "G",
+        "topRight": "G",
+        "bottomLeft": "G",
+        "bottomRight": "G"
+      },
+      "sourceRect": {
+        "x": 64,
+        "y": 32,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "index": 7,
+      "name": "template-tile-07",
+      "pattern": [
+        "11",
+        "10"
+      ],
+      "cells": {
+        "topLeft": "G",
+        "topRight": "G",
+        "bottomLeft": "G",
+        "bottomRight": "V"
+      },
+      "sourceRect": {
+        "x": 96,
+        "y": 32,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "index": 8,
+      "name": "template-tile-08",
+      "pattern": [
+        "01",
+        "00"
+      ],
+      "cells": {
+        "topLeft": "V",
+        "topRight": "G",
+        "bottomLeft": "V",
+        "bottomRight": "V"
+      },
+      "sourceRect": {
+        "x": 0,
+        "y": 64,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "index": 9,
+      "name": "template-tile-09",
+      "pattern": [
+        "11",
+        "00"
+      ],
+      "cells": {
+        "topLeft": "G",
+        "topRight": "G",
+        "bottomLeft": "V",
+        "bottomRight": "V"
+      },
+      "sourceRect": {
+        "x": 32,
+        "y": 64,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "index": 10,
+      "name": "template-tile-10",
+      "pattern": [
+        "11",
+        "01"
+      ],
+      "cells": {
+        "topLeft": "G",
+        "topRight": "G",
+        "bottomLeft": "V",
+        "bottomRight": "G"
+      },
+      "sourceRect": {
+        "x": 64,
+        "y": 64,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "index": 11,
+      "name": "template-tile-11",
+      "pattern": [
+        "10",
+        "10"
+      ],
+      "cells": {
+        "topLeft": "G",
+        "topRight": "V",
+        "bottomLeft": "G",
+        "bottomRight": "V"
+      },
+      "sourceRect": {
+        "x": 96,
+        "y": 64,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "index": 12,
+      "name": "template-tile-12",
+      "pattern": [
+        "00",
+        "00"
+      ],
+      "cells": {
+        "topLeft": "V",
+        "topRight": "V",
+        "bottomLeft": "V",
+        "bottomRight": "V"
+      },
+      "sourceRect": {
+        "x": 0,
+        "y": 96,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "index": 13,
+      "name": "template-tile-13",
+      "pattern": [
+        "00",
+        "11"
+      ],
+      "cells": {
+        "topLeft": "V",
+        "topRight": "V",
+        "bottomLeft": "G",
+        "bottomRight": "G"
+      },
+      "sourceRect": {
+        "x": 32,
+        "y": 96,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "index": 14,
+      "name": "template-tile-14",
+      "pattern": [
+        "01",
+        "00"
+      ],
+      "cells": {
+        "topLeft": "V",
+        "topRight": "G",
+        "bottomLeft": "V",
+        "bottomRight": "V"
+      },
+      "sourceRect": {
+        "x": 64,
+        "y": 96,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "index": 15,
+      "name": "template-tile-15",
+      "pattern": [
+        "10",
+        "00"
+      ],
+      "cells": {
+        "topLeft": "G",
+        "topRight": "V",
+        "bottomLeft": "V",
+        "bottomRight": "V"
+      },
+      "sourceRect": {
+        "x": 96,
+        "y": 96,
+        "width": 32,
+        "height": 32
+      }
+    }
+  ]
+}
