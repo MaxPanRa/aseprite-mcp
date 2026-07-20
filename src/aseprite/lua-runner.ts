@@ -264,21 +264,26 @@ local function has_bit(value, bit)
   return math.floor(value / bit) % 2 == 1
 end
 
-local function draw_dual_grid_tile(image, tile_x, tile_y, tile_size, mask, colors, guide_mode, label_mode)
+local function draw_dual_grid_tile(image, tile_x, tile_y, tile_size, mask, pattern, colors, guide_mode, label_mode)
   local half = math.floor(tile_size / 2)
   local right = tile_size - half
   local bottom = tile_size - half
   draw_rect(image, tile_x, tile_y, tile_size, tile_size, colors.background)
 
   local corners = {
-    { bit=1, x=tile_x, y=tile_y, w=half, h=half },
-    { bit=2, x=tile_x + half, y=tile_y, w=right, h=half },
-    { bit=4, x=tile_x + half, y=tile_y + half, w=right, h=bottom },
-    { bit=8, x=tile_x, y=tile_y + half, w=half, h=bottom }
+    { bit=1, pattern_row=1, pattern_col=1, x=tile_x, y=tile_y, w=half, h=half },
+    { bit=2, pattern_row=1, pattern_col=2, x=tile_x + half, y=tile_y, w=right, h=half },
+    { bit=4, pattern_row=2, pattern_col=2, x=tile_x + half, y=tile_y + half, w=right, h=bottom },
+    { bit=8, pattern_row=2, pattern_col=1, x=tile_x, y=tile_y + half, w=half, h=bottom }
   }
 
   for _, corner in ipairs(corners) do
-    if has_bit(mask, corner.bit) then
+    local filled = has_bit(mask, corner.bit)
+    if pattern ~= nil then
+      local row = pattern[corner.pattern_row]
+      filled = row ~= nil and row:sub(corner.pattern_col, corner.pattern_col) == "1"
+    end
+    if filled then
       draw_rect(image, corner.x, corner.y, corner.w, corner.h, colors.terrain)
     end
   end
@@ -494,7 +499,8 @@ local status, err = pcall(function()
       local row = math.floor(mask / columns)
       local tile_x = margin + column * (tile_size + spacing)
       local tile_y = margin + row * (tile_size + spacing)
-      draw_dual_grid_tile(image, tile_x, tile_y, tile_size, mask, colors, payload.guideMode or "quadrant", payload.labelMode or "none")
+      local pattern = payload.tilePatterns and payload.tilePatterns[mask + 1] or nil
+      draw_dual_grid_tile(image, tile_x, tile_y, tile_size, mask, pattern, colors, payload.guideMode or "none", payload.labelMode or "none")
     end
     sprite:saveAs(payload.outputPath)
     ok({ filePath=payload.outputPath, tileSystem="dual-grid", tileCount=16, tileSize=tile_size, columns=columns, rows=rows, document=sprite_info(sprite), warnings={} })

@@ -14,37 +14,68 @@ const DualGridTilesetSchema = {
   columns: z.number().int().min(1).max(16).default(4),
   spacing: z.number().int().min(0).max(8).default(0),
   margin: z.number().int().min(0).max(16).default(0),
-  terrainColor: ColorSchema.default("#FF4058FF"),
-  backgroundColor: ColorSchema.default("#FFFFFFFF"),
+  layoutPreset: z.enum(["template", "bitmask"]).default("template"),
+  terrainColor: ColorSchema.default("#49AD52FF"),
+  backgroundColor: ColorSchema.default("#00000000"),
   edgeColor: ColorSchema.default("#2F5F2AFF"),
   highlightColor: ColorSchema.default("#78C850FF"),
   shadowColor: ColorSchema.default("#1F3F1FFF"),
   gridColor: ColorSchema.default("#FF55D6FF"),
-  guideMode: z.enum(["none", "tile", "quadrant"]).default("quadrant"),
+  guideMode: z.enum(["none", "tile", "quadrant"]).default("none"),
   labelMode: z.enum(["none", "mask"]).default("none"),
   overwrite: z.boolean().optional(),
   dryRun: z.boolean().default(false),
 };
 
-const CORNERS = [
-  { key: "nw", bit: 1 },
-  { key: "ne", bit: 2 },
-  { key: "se", bit: 4 },
-  { key: "sw", bit: 8 },
+const REFERENCE_DUAL_GRID_TEMPLATE = [
+  "00011000",
+  "10011111",
+  "10011111",
+  "01111110",
+  "01111110",
+  "00000110",
+  "00000110",
+  "00110000",
 ] as const;
 
-function dualGridTiles(tileSize: 16 | 32, columns: number, spacing: number, margin: number) {
+function tilePatternFromTemplate(mask: number, columns: number): [string, string] {
+  const column = mask % columns;
+  const row = Math.floor(mask / columns);
+  const x = column * 2;
+  const y = row * 2;
+  return [
+    REFERENCE_DUAL_GRID_TEMPLATE[y]?.slice(x, x + 2) ?? "00",
+    REFERENCE_DUAL_GRID_TEMPLATE[y + 1]?.slice(x, x + 2) ?? "00",
+  ];
+}
+
+function tilePatternFromMask(mask: number): [string, string] {
+  return [
+    `${mask & 1 ? "1" : "0"}${mask & 2 ? "1" : "0"}`,
+    `${mask & 8 ? "1" : "0"}${mask & 4 ? "1" : "0"}`,
+  ];
+}
+
+function dualGridTiles(
+  tileSize: 16 | 32,
+  columns: number,
+  spacing: number,
+  margin: number,
+  layoutPreset: "template" | "bitmask",
+) {
   return Array.from({ length: 16 }, (_, mask) => {
     const column = mask % columns;
     const row = Math.floor(mask / columns);
+    const pattern = layoutPreset === "template" ? tilePatternFromTemplate(mask, columns) : tilePatternFromMask(mask);
     return {
       mask,
       name: `dual-grid-${mask.toString(2).padStart(4, "0")}`,
+      pattern,
       bits: {
-        nw: Boolean(mask & 1),
-        ne: Boolean(mask & 2),
-        se: Boolean(mask & 4),
-        sw: Boolean(mask & 8),
+        nw: pattern[0][0] === "1",
+        ne: pattern[0][1] === "1",
+        sw: pattern[1][0] === "1",
+        se: pattern[1][1] === "1",
       },
       sourceRect: {
         x: margin + column * (tileSize + spacing),
@@ -85,7 +116,7 @@ export function registerTilesetTools(server: McpServer, context: AppContext): vo
         const metadataPath = args.metadataPath
           ? await context.paths.assertWritable(args.metadataPath, args.overwrite)
           : undefined;
-        const tiles = dualGridTiles(args.tileSize, args.columns, args.spacing, args.margin);
+        const tiles = dualGridTiles(args.tileSize, args.columns, args.spacing, args.margin, args.layoutPreset);
         const metadata = {
           type: "dual-grid",
           version: 1,
@@ -95,9 +126,14 @@ export function registerTilesetTools(server: McpServer, context: AppContext): vo
           rows,
           spacing: args.spacing,
           margin: args.margin,
+          layoutPreset: args.layoutPreset,
+          referenceTemplate: args.layoutPreset === "template" ? REFERENCE_DUAL_GRID_TEMPLATE : undefined,
           guideMode: args.guideMode,
-          bitOrder: { nw: 1, ne: 2, se: 4, sw: 8 },
-          maskFormula: "mask = (nw ? 1 : 0) | (ne ? 2 : 0) | (se ? 4 : 0) | (sw ? 8 : 0)",
+          bitOrder: args.layoutPreset === "bitmask" ? { nw: 1, ne: 2, se: 4, sw: 8 } : undefined,
+          maskFormula:
+            args.layoutPreset === "bitmask"
+              ? "mask = (nw ? 1 : 0) | (ne ? 2 : 0) | (se ? 4 : 0) | (sw ? 8 : 0)"
+              : "pattern is copied from the reference dual-grid template stencil",
           tiles,
         };
 
@@ -113,6 +149,7 @@ export function registerTilesetTools(server: McpServer, context: AppContext): vo
           columns: args.columns,
           spacing: args.spacing,
           margin: args.margin,
+          tilePatterns: tiles.map((tile) => tile.pattern),
           terrainColor: normalizeColor(args.terrainColor),
           backgroundColor: normalizeColor(args.backgroundColor),
           edgeColor: normalizeColor(args.edgeColor),

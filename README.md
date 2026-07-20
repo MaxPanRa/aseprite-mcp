@@ -196,15 +196,16 @@ Create a dual-grid tileset:
   "metadataPath": "examples/output/dual-grid-grass.json",
   "tileSize": 16,
   "columns": 4,
-  "terrainColor": "#FF4058FF",
-  "backgroundColor": "#FFFFFFFF",
+  "layoutPreset": "template",
+  "terrainColor": "#49AD52FF",
+  "backgroundColor": "#00000000",
   "gridColor": "#FF55D6FF",
-  "guideMode": "quadrant",
+  "guideMode": "none",
   "overwrite": true
 }
 ```
 
-The dual-grid mask order is `NW=1`, `NE=2`, `SE=4`, `SW=8`. Red pixels are the main material, white pixels are empty space, and the optional magenta guide marks tile and quadrant boundaries. The metadata file includes tile rectangles and the mask formula for engine-side lookup.
+The default `template` layout follows the reference dual-grid stencil: material pixels are placed according to the template, not by row-major binary mask order. Use `layoutPreset: "bitmask"` only when you need the direct `NW=1`, `NE=2`, `SE=4`, `SW=8` quadrant map. The metadata file includes tile rectangles and per-tile patterns for engine-side lookup.
 
 Query the palette:
 
