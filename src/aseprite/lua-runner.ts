@@ -264,27 +264,45 @@ local function has_bit(value, bit)
   return math.floor(value / bit) % 2 == 1
 end
 
+local function draw_pattern_tile(image, tile_x, tile_y, tile_size, pattern, color)
+  local pattern_height = #pattern
+  if pattern_height == 0 then return end
+  local pattern_width = string.len(pattern[1] or "")
+  if pattern_width == 0 then return end
+
+  for pattern_y=1,pattern_height do
+    local row = pattern[pattern_y]
+    for pattern_x=1,pattern_width do
+      if row:sub(pattern_x, pattern_x) == "1" then
+        local x1 = tile_x + math.floor((pattern_x - 1) * tile_size / pattern_width)
+        local y1 = tile_y + math.floor((pattern_y - 1) * tile_size / pattern_height)
+        local x2 = tile_x + math.floor(pattern_x * tile_size / pattern_width)
+        local y2 = tile_y + math.floor(pattern_y * tile_size / pattern_height)
+        draw_rect(image, x1, y1, x2 - x1, y2 - y1, color)
+      end
+    end
+  end
+end
+
 local function draw_dual_grid_tile(image, tile_x, tile_y, tile_size, mask, pattern, colors, guide_mode, label_mode)
   local half = math.floor(tile_size / 2)
-  local right = tile_size - half
-  local bottom = tile_size - half
   draw_rect(image, tile_x, tile_y, tile_size, tile_size, colors.background)
 
-  local corners = {
-    { bit=1, pattern_row=1, pattern_col=1, x=tile_x, y=tile_y, w=half, h=half },
-    { bit=2, pattern_row=1, pattern_col=2, x=tile_x + half, y=tile_y, w=right, h=half },
-    { bit=4, pattern_row=2, pattern_col=2, x=tile_x + half, y=tile_y + half, w=right, h=bottom },
-    { bit=8, pattern_row=2, pattern_col=1, x=tile_x, y=tile_y + half, w=half, h=bottom }
-  }
-
-  for _, corner in ipairs(corners) do
-    local filled = has_bit(mask, corner.bit)
-    if pattern ~= nil then
-      local row = pattern[corner.pattern_row]
-      filled = row ~= nil and row:sub(corner.pattern_col, corner.pattern_col) == "1"
-    end
-    if filled then
-      draw_rect(image, corner.x, corner.y, corner.w, corner.h, colors.terrain)
+  if pattern ~= nil then
+    draw_pattern_tile(image, tile_x, tile_y, tile_size, pattern, colors.terrain)
+  else
+    local right = tile_size - half
+    local bottom = tile_size - half
+    local corners = {
+      { bit=1, x=tile_x, y=tile_y, w=half, h=half },
+      { bit=2, x=tile_x + half, y=tile_y, w=right, h=half },
+      { bit=4, x=tile_x + half, y=tile_y + half, w=right, h=bottom },
+      { bit=8, x=tile_x, y=tile_y + half, w=half, h=bottom }
+    }
+    for _, corner in ipairs(corners) do
+      if has_bit(mask, corner.bit) then
+        draw_rect(image, corner.x, corner.y, corner.w, corner.h, colors.terrain)
+      end
     end
   end
 

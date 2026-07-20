@@ -1,0 +1,350 @@
+{
+  "type": "dual-grid",
+  "version": 4,
+  "layoutPreset": "template",
+  "referenceStencil": [
+    "0000001111000000",
+    "0000001111000000",
+    "1100001111111111",
+    "1100001111111111",
+    "1100001111111111",
+    "1100001111111111",
+    "0011111111111100",
+    "0011111111111100",
+    "0011111111111100",
+    "0011111111111100",
+    "0000000000111100",
+    "0000000000111100",
+    "0000000000111100",
+    "0000000000111100",
+    "0000111100000000",
+    "0000111100000000"
+  ],
+  "tileSize": 32,
+  "columns": 4,
+  "rows": 4,
+  "material": "grass",
+  "empty": "transparent",
+  "tiles": [
+    {
+      "mask": 0,
+      "pattern": [
+        "0000",
+        "0000",
+        "1100",
+        "1100"
+      ],
+      "patternResolution": {
+        "width": 4,
+        "height": 4
+      },
+      "groundCells": 4,
+      "sourceRect": {
+        "x": 0,
+        "y": 0,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 1,
+      "pattern": [
+        "0011",
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "patternResolution": {
+        "width": 4,
+        "height": 4
+      },
+      "groundCells": 8,
+      "sourceRect": {
+        "x": 32,
+        "y": 0,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 2,
+      "pattern": [
+        "1100",
+        "1100",
+        "1111",
+        "1111"
+      ],
+      "patternResolution": {
+        "width": 4,
+        "height": 4
+      },
+      "groundCells": 12,
+      "sourceRect": {
+        "x": 64,
+        "y": 0,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 3,
+      "pattern": [
+        "0000",
+        "0000",
+        "1111",
+        "1111"
+      ],
+      "patternResolution": {
+        "width": 4,
+        "height": 4
+      },
+      "groundCells": 8,
+      "sourceRect": {
+        "x": 96,
+        "y": 0,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 4,
+      "pattern": [
+        "1100",
+        "1100",
+        "0011",
+        "0011"
+      ],
+      "patternResolution": {
+        "width": 4,
+        "height": 4
+      },
+      "groundCells": 8,
+      "sourceRect": {
+        "x": 0,
+        "y": 32,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 5,
+      "pattern": [
+        "0011",
+        "0011",
+        "1111",
+        "1111"
+      ],
+      "patternResolution": {
+        "width": 4,
+        "height": 4
+      },
+      "groundCells": 12,
+      "sourceRect": {
+        "x": 32,
+        "y": 32,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 6,
+      "pattern": [
+        "1111",
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "patternResolution": {
+        "width": 4,
+        "height": 4
+      },
+      "groundCells": 16,
+      "sourceRect": {
+        "x": 64,
+        "y": 32,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 7,
+      "pattern": [
+        "1111",
+        "1111",
+        "1100",
+        "1100"
+      ],
+      "patternResolution": {
+        "width": 4,
+        "height": 4
+      },
+      "groundCells": 12,
+      "sourceRect": {
+        "x": 96,
+        "y": 32,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 8,
+      "pattern": [
+        "0011",
+        "0011",
+        "0000",
+        "0000"
+      ],
+      "patternResolution": {
+        "width": 4,
+        "height": 4
+      },
+      "groundCells": 4,
+      "sourceRect": {
+        "x": 0,
+        "y": 64,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 9,
+      "pattern": [
+        "1111",
+        "1111",
+        "0000",
+        "0000"
+      ],
+      "patternResolution": {
+        "width": 4,
+        "height": 4
+      },
+      "groundCells": 8,
+      "sourceRect": {
+        "x": 32,
+        "y": 64,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 10,
+      "pattern": [
+        "1111",
+        "1111",
+        "0011",
+        "0011"
+      ],
+      "patternResolution": {
+        "width": 4,
+        "height": 4
+      },
+      "groundCells": 12,
+      "sourceRect": {
+        "x": 64,
+        "y": 64,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 11,
+      "pattern": [
+        "1100",
+        "1100",
+        "1100",
+        "1100"
+      ],
+      "patternResolution": {
+        "width": 4,
+        "height": 4
+      },
+      "groundCells": 8,
+      "sourceRect": {
+        "x": 96,
+        "y": 64,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 12,
+      "pattern": [
+        "0000",
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "patternResolution": {
+        "width": 4,
+        "height": 4
+      },
+      "groundCells": 0,
+      "sourceRect": {
+        "x": 0,
+        "y": 96,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 13,
+      "pattern": [
+        "0000",
+        "0000",
+        "1111",
+        "1111"
+      ],
+      "patternResolution": {
+        "width": 4,
+        "height": 4
+      },
+      "groundCells": 8,
+      "sourceRect": {
+        "x": 32,
+        "y": 96,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 14,
+      "pattern": [
+        "0011",
+        "0011",
+        "0000",
+        "0000"
+      ],
+      "patternResolution": {
+        "width": 4,
+        "height": 4
+      },
+      "groundCells": 4,
+      "sourceRect": {
+        "x": 64,
+        "y": 96,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 15,
+      "pattern": [
+        "1100",
+        "1100",
+        "0000",
+        "0000"
+      ],
+      "patternResolution": {
+        "width": 4,
+        "height": 4
+      },
+      "groundCells": 4,
+      "sourceRect": {
+        "x": 96,
+        "y": 96,
+        "width": 32,
+        "height": 32
+      }
+    }
+  ]
+}

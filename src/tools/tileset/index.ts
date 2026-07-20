@@ -15,6 +15,7 @@ const DualGridTilesetSchema = {
   spacing: z.number().int().min(0).max(8).default(0),
   margin: z.number().int().min(0).max(16).default(0),
   layoutPreset: z.enum(["template", "bitmask"]).default("template"),
+  referenceStencil: z.array(z.string().regex(/^[01]+$/)).optional(),
   terrainColor: ColorSchema.default("#49AD52FF"),
   backgroundColor: ColorSchema.default("#00000000"),
   edgeColor: ColorSchema.default("#2F5F2AFF"),
@@ -27,55 +28,87 @@ const DualGridTilesetSchema = {
   dryRun: z.boolean().default(false),
 };
 
-const REFERENCE_DUAL_GRID_TEMPLATE = [
-  "00011000",
-  "10011111",
-  "10011111",
-  "01111110",
-  "01111110",
-  "00000110",
-  "00000110",
-  "00110000",
+const REFERENCE_DUAL_GRID_PIXEL_STENCIL = [
+  "0000001111000000",
+  "0000001111000000",
+  "1100001111111111",
+  "1100001111111111",
+  "1100001111111111",
+  "1100001111111111",
+  "0011111111111100",
+  "0011111111111100",
+  "0011111111111100",
+  "0011111111111100",
+  "0000000000111100",
+  "0000000000111100",
+  "0000000000111100",
+  "0000000000111100",
+  "0000111100000000",
+  "0000111100000000",
 ] as const;
 
-function tilePatternFromTemplate(mask: number, columns: number): [string, string] {
+function tilePatternFromTemplate(mask: number, columns: number, rows: number, referenceStencil: readonly string[]): string[] {
   const column = mask % columns;
   const row = Math.floor(mask / columns);
-  const x = column * 2;
-  const y = row * 2;
-  return [
-    REFERENCE_DUAL_GRID_TEMPLATE[y]?.slice(x, x + 2) ?? "00",
-    REFERENCE_DUAL_GRID_TEMPLATE[y + 1]?.slice(x, x + 2) ?? "00",
-  ];
+  const tileStencilWidth = Math.floor((referenceStencil[0]?.length ?? 0) / columns);
+  const tileStencilHeight = Math.floor(referenceStencil.length / rows);
+  const x = column * tileStencilWidth;
+  const y = row * tileStencilHeight;
+  return Array.from({ length: tileStencilHeight }, (_, offset) =>
+    referenceStencil[y + offset]?.slice(x, x + tileStencilWidth) ?? "0".repeat(tileStencilWidth),
+  );
 }
 
-function tilePatternFromMask(mask: number): [string, string] {
+function tilePatternFromMask(mask: number): string[] {
   return [
     `${mask & 1 ? "1" : "0"}${mask & 2 ? "1" : "0"}`,
     `${mask & 8 ? "1" : "0"}${mask & 4 ? "1" : "0"}`,
   ];
 }
 
+function quadrantHasGround(pattern: string[], quadrant: "nw" | "ne" | "sw" | "se"): boolean {
+  const rowStart = quadrant === "nw" || quadrant === "ne" ? 0 : Math.floor(pattern.length / 2);
+  const rowEnd = quadrant === "nw" || quadrant === "ne" ? Math.ceil(pattern.length / 2) : pattern.length;
+  const columnStart = quadrant === "nw" || quadrant === "sw" ? 0 : Math.floor((pattern[0]?.length ?? 0) / 2);
+  const columnEnd = quadrant === "nw" || quadrant === "sw" ? Math.ceil((pattern[0]?.length ?? 0) / 2) : (pattern[0]?.length ?? 0);
+
+  for (let y = rowStart; y < rowEnd; y += 1) {
+    for (let x = columnStart; x < columnEnd; x += 1) {
+      if (pattern[y]?.[x] === "1") return true;
+    }
+  }
+  return false;
+}
+
+function groundCellCount(pattern: string[]): number {
+  return pattern.reduce((sum, row) => sum + Array.from(row).filter((cell) => cell === "1").length, 0);
+}
+
 function dualGridTiles(
   tileSize: 16 | 32,
   columns: number,
+  rows: number,
   spacing: number,
   margin: number,
   layoutPreset: "template" | "bitmask",
+  referenceStencil: readonly string[],
 ) {
   return Array.from({ length: 16 }, (_, mask) => {
     const column = mask % columns;
     const row = Math.floor(mask / columns);
-    const pattern = layoutPreset === "template" ? tilePatternFromTemplate(mask, columns) : tilePatternFromMask(mask);
+    const pattern =
+      layoutPreset === "template" ? tilePatternFromTemplate(mask, columns, rows, referenceStencil) : tilePatternFromMask(mask);
     return {
       mask,
       name: `dual-grid-${mask.toString(2).padStart(4, "0")}`,
       pattern,
+      patternResolution: { width: pattern[0]?.length ?? 0, height: pattern.length },
+      groundCells: groundCellCount(pattern),
       bits: {
-        nw: pattern[0][0] === "1",
-        ne: pattern[0][1] === "1",
-        sw: pattern[1][0] === "1",
-        se: pattern[1][1] === "1",
+        nw: quadrantHasGround(pattern, "nw"),
+        ne: quadrantHasGround(pattern, "ne"),
+        sw: quadrantHasGround(pattern, "sw"),
+        se: quadrantHasGround(pattern, "se"),
       },
       sourceRect: {
         x: margin + column * (tileSize + spacing),
@@ -85,6 +118,27 @@ function dualGridTiles(
       },
     };
   });
+}
+
+function validateReferenceStencil(referenceStencil: string[], columns: number, rows: number) {
+  if (referenceStencil.length === 0) {
+    return { code: "INVALID_REFERENCE_STENCIL", message: "referenceStencil cannot be empty." };
+  }
+  const width = referenceStencil[0]?.length ?? 0;
+  if (width === 0) {
+    return { code: "INVALID_REFERENCE_STENCIL", message: "referenceStencil rows cannot be empty." };
+  }
+  if (!referenceStencil.every((row) => row.length === width)) {
+    return { code: "INVALID_REFERENCE_STENCIL", message: "All referenceStencil rows must have the same width." };
+  }
+  if (width % columns !== 0 || referenceStencil.length % rows !== 0) {
+    return {
+      code: "INVALID_REFERENCE_STENCIL",
+      message: "referenceStencil dimensions must be divisible by the tileset columns and rows.",
+      details: { stencilWidth: width, stencilHeight: referenceStencil.length, columns, rows },
+    };
+  }
+  return undefined;
 }
 
 export function registerTilesetTools(server: McpServer, context: AppContext): void {
@@ -116,7 +170,25 @@ export function registerTilesetTools(server: McpServer, context: AppContext): vo
         const metadataPath = args.metadataPath
           ? await context.paths.assertWritable(args.metadataPath, args.overwrite)
           : undefined;
-        const tiles = dualGridTiles(args.tileSize, args.columns, args.spacing, args.margin, args.layoutPreset);
+        const referenceStencil = args.referenceStencil ?? [...REFERENCE_DUAL_GRID_PIXEL_STENCIL];
+        if (args.layoutPreset === "template") {
+          const validationError = validateReferenceStencil(referenceStencil, args.columns, rows);
+          if (validationError) {
+            return {
+              success: false,
+              error: validationError,
+            };
+          }
+        }
+        const tiles = dualGridTiles(
+          args.tileSize,
+          args.columns,
+          rows,
+          args.spacing,
+          args.margin,
+          args.layoutPreset,
+          referenceStencil,
+        );
         const metadata = {
           type: "dual-grid",
           version: 1,
@@ -127,7 +199,7 @@ export function registerTilesetTools(server: McpServer, context: AppContext): vo
           spacing: args.spacing,
           margin: args.margin,
           layoutPreset: args.layoutPreset,
-          referenceTemplate: args.layoutPreset === "template" ? REFERENCE_DUAL_GRID_TEMPLATE : undefined,
+          referencePixelStencil: args.layoutPreset === "template" ? referenceStencil : undefined,
           guideMode: args.guideMode,
           bitOrder: args.layoutPreset === "bitmask" ? { nw: 1, ne: 2, se: 4, sw: 8 } : undefined,
           maskFormula:

@@ -197,6 +197,24 @@ Create a dual-grid tileset:
   "tileSize": 16,
   "columns": 4,
   "layoutPreset": "template",
+  "referenceStencil": [
+    "0000001111000000",
+    "0000001111000000",
+    "1100001111111111",
+    "1100001111111111",
+    "1100001111111111",
+    "1100001111111111",
+    "0011111111111100",
+    "0011111111111100",
+    "0011111111111100",
+    "0011111111111100",
+    "0000000000111100",
+    "0000000000111100",
+    "0000000000111100",
+    "0000000000111100",
+    "0000111100000000",
+    "0000111100000000"
+  ],
   "terrainColor": "#49AD52FF",
   "backgroundColor": "#00000000",
   "gridColor": "#FF55D6FF",
@@ -205,7 +223,7 @@ Create a dual-grid tileset:
 }
 ```
 
-The default `template` layout follows the reference dual-grid stencil: material pixels are placed according to the template, not by row-major binary mask order. Use `layoutPreset: "bitmask"` only when you need the direct `NW=1`, `NE=2`, `SE=4`, `SW=8` quadrant map. The metadata file includes tile rectangles and per-tile patterns for engine-side lookup.
+The default `template` layout follows the reference dual-grid stencil: material pixels are placed according to a pixel-level template grid, not by row-major binary mask order. `referenceStencil` is optional; when provided, it must be a rectangular `0`/`1` matrix whose width is divisible by `columns` and whose height is divisible by the tileset rows. Use `layoutPreset: "bitmask"` only when you need the direct `NW=1`, `NE=2`, `SE=4`, `SW=8` quadrant map. The metadata file includes tile rectangles, per-tile stencil patterns, pattern resolution, and quadrant summaries for engine-side lookup.
 
 Query the palette:
 
