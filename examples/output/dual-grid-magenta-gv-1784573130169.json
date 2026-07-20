@@ -1,0 +1,376 @@
+{
+  "type": "dual-grid",
+  "layoutPreset": "template",
+  "referencePixelStencil": [
+    "0000001111000000",
+    "0000001111000000",
+    "1100001111111111",
+    "1100001111111111",
+    "1100001111111111",
+    "1100001111111111",
+    "0011111111111100",
+    "0011111111111100",
+    "0011111111111100",
+    "0011111111111100",
+    "0000000000111100",
+    "0000000000111100",
+    "0000000000111100",
+    "0000000000111100",
+    "0000111100000000",
+    "0000111100000000"
+  ],
+  "tiles": [
+    {
+      "mask": 0,
+      "name": "dual-grid-0000",
+      "pattern": [
+        "0000",
+        "0000",
+        "1100",
+        "1100"
+      ],
+      "bits": {
+        "nw": false,
+        "ne": false,
+        "sw": true,
+        "se": false
+      },
+      "sourceRect": {
+        "x": 2,
+        "y": 2,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 1,
+      "name": "dual-grid-0001",
+      "pattern": [
+        "0011",
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "bits": {
+        "nw": false,
+        "ne": true,
+        "sw": false,
+        "se": true
+      },
+      "sourceRect": {
+        "x": 36,
+        "y": 2,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 2,
+      "name": "dual-grid-0010",
+      "pattern": [
+        "1100",
+        "1100",
+        "1111",
+        "1111"
+      ],
+      "bits": {
+        "nw": true,
+        "ne": false,
+        "sw": true,
+        "se": true
+      },
+      "sourceRect": {
+        "x": 70,
+        "y": 2,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 3,
+      "name": "dual-grid-0011",
+      "pattern": [
+        "0000",
+        "0000",
+        "1111",
+        "1111"
+      ],
+      "bits": {
+        "nw": false,
+        "ne": false,
+        "sw": true,
+        "se": true
+      },
+      "sourceRect": {
+        "x": 104,
+        "y": 2,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 4,
+      "name": "dual-grid-0100",
+      "pattern": [
+        "1100",
+        "1100",
+        "0011",
+        "0011"
+      ],
+      "bits": {
+        "nw": true,
+        "ne": false,
+        "sw": false,
+        "se": true
+      },
+      "sourceRect": {
+        "x": 2,
+        "y": 36,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 5,
+      "name": "dual-grid-0101",
+      "pattern": [
+        "0011",
+        "0011",
+        "1111",
+        "1111"
+      ],
+      "bits": {
+        "nw": false,
+        "ne": true,
+        "sw": true,
+        "se": true
+      },
+      "sourceRect": {
+        "x": 36,
+        "y": 36,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 6,
+      "name": "dual-grid-0110",
+      "pattern": [
+        "1111",
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "bits": {
+        "nw": true,
+        "ne": true,
+        "sw": true,
+        "se": true
+      },
+      "sourceRect": {
+        "x": 70,
+        "y": 36,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 7,
+      "name": "dual-grid-0111",
+      "pattern": [
+        "1111",
+        "1111",
+        "1100",
+        "1100"
+      ],
+      "bits": {
+        "nw": true,
+        "ne": true,
+        "sw": true,
+        "se": false
+      },
+      "sourceRect": {
+        "x": 104,
+        "y": 36,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 8,
+      "name": "dual-grid-1000",
+      "pattern": [
+        "0011",
+        "0011",
+        "0000",
+        "0000"
+      ],
+      "bits": {
+        "nw": false,
+        "ne": true,
+        "sw": false,
+        "se": false
+      },
+      "sourceRect": {
+        "x": 2,
+        "y": 70,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 9,
+      "name": "dual-grid-1001",
+      "pattern": [
+        "1111",
+        "1111",
+        "0000",
+        "0000"
+      ],
+      "bits": {
+        "nw": true,
+        "ne": true,
+        "sw": false,
+        "se": false
+      },
+      "sourceRect": {
+        "x": 36,
+        "y": 70,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 10,
+      "name": "dual-grid-1010",
+      "pattern": [
+        "1111",
+        "1111",
+        "0011",
+        "0011"
+      ],
+      "bits": {
+        "nw": true,
+        "ne": true,
+        "sw": false,
+        "se": true
+      },
+      "sourceRect": {
+        "x": 70,
+        "y": 70,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 11,
+      "name": "dual-grid-1011",
+      "pattern": [
+        "1100",
+        "1100",
+        "1100",
+        "1100"
+      ],
+      "bits": {
+        "nw": true,
+        "ne": false,
+        "sw": true,
+        "se": false
+      },
+      "sourceRect": {
+        "x": 104,
+        "y": 70,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 12,
+      "name": "dual-grid-1100",
+      "pattern": [
+        "0000",
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "bits": {
+        "nw": false,
+        "ne": false,
+        "sw": false,
+        "se": false
+      },
+      "sourceRect": {
+        "x": 2,
+        "y": 104,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 13,
+      "name": "dual-grid-1101",
+      "pattern": [
+        "0000",
+        "0000",
+        "1111",
+        "1111"
+      ],
+      "bits": {
+        "nw": false,
+        "ne": false,
+        "sw": true,
+        "se": true
+      },
+      "sourceRect": {
+        "x": 36,
+        "y": 104,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 14,
+      "name": "dual-grid-1110",
+      "pattern": [
+        "0011",
+        "0011",
+        "0000",
+        "0000"
+      ],
+      "bits": {
+        "nw": false,
+        "ne": true,
+        "sw": false,
+        "se": false
+      },
+      "sourceRect": {
+        "x": 70,
+        "y": 104,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "mask": 15,
+      "name": "dual-grid-1111",
+      "pattern": [
+        "1100",
+        "1100",
+        "0000",
+        "0000"
+      ],
+      "bits": {
+        "nw": true,
+        "ne": false,
+        "sw": false,
+        "se": false
+      },
+      "sourceRect": {
+        "x": 104,
+        "y": 104,
+        "width": 32,
+        "height": 32
+      }
+    }
+  ]
+}

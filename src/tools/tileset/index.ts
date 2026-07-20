@@ -29,25 +29,24 @@ const DualGridTilesetSchema = {
   dryRun: z.boolean().default(false),
 };
 
-function buildUniqueDualGridStencil(columns = 4, rows = 4, quadrantCells = 2): string[] {
-  return Array.from({ length: rows * quadrantCells * 2 }, (_, y) => {
-    const tileRow = Math.floor(y / (quadrantCells * 2));
-    const localY = y % (quadrantCells * 2);
-    const south = localY >= quadrantCells;
-    let line = "";
-    for (let tileColumn = 0; tileColumn < columns; tileColumn += 1) {
-      const mask = tileRow * columns + tileColumn;
-      for (let localX = 0; localX < quadrantCells * 2; localX += 1) {
-        const east = localX >= quadrantCells;
-        const bit = !south && !east ? 1 : !south && east ? 2 : south && east ? 4 : 8;
-        line += mask & bit ? "1" : "0";
-      }
-    }
-    return line;
-  });
-}
-
-const REFERENCE_DUAL_GRID_PIXEL_STENCIL = buildUniqueDualGridStencil();
+export const REFERENCE_DUAL_GRID_PIXEL_STENCIL = [
+  "0000001111000000",
+  "0000001111000000",
+  "1100001111111111",
+  "1100001111111111",
+  "1100001111111111",
+  "1100001111111111",
+  "0011111111111100",
+  "0011111111111100",
+  "0011111111111100",
+  "0011111111111100",
+  "0000000000111100",
+  "0000000000111100",
+  "0000000000111100",
+  "0000000000111100",
+  "0000111100000000",
+  "0000111100000000",
+] as const;
 
 function tilePatternFromTemplate(mask: number, columns: number, rows: number, referenceStencil: readonly string[]): string[] {
   const column = mask % columns;
